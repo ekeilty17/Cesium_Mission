@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Mission</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+  </style>
+  <style>
+    @import url(../templates/bucket.css);
+  </style>
+
+  <div class="backdrop" id="menu" style="display: inline-block;">
+    <span>Buttons</span>
+    <div class="main_buttons">
+	<input type="button" id="Select" class="Select" value="Select" onclick="Select_function()"/>
+	<input type="button" id="Create" class="Create" value="Create Way Points" onclick="Create_function()"/>
+	<input type="button" id="Edit" class="Edit" value="Edit Way Point" onclick="Edit_function()"/>
+	<input type="button" id="Polygon" class="Polygon" value="Polygon" onclick="Polygon_function()"/>
+	<input type="button" id="Lines" class="Lines" value="Lines" onclick="Lines_function()"/>
+	<input type="button" id="Lawn" class="Lawn" value="Lawn Mower" onclick="Lawn_Mower_function()"/>
+	<input type="button" id="Move" class="Move" value="Move" onclick="Move_function()"/>
+	<input type="button" id="Delete" class="Delete" value="Delete" onclick="Delete_function()"/>
+	<input type="button" id="Delete_All" class="Delete_All" value="Delete All" onclick="Delete_All_function()"/>
+	<input type="button" id="Export" class="Export" value="Export Coordinates" onclick="Export_function()"/>
+    </div>
+  </div>
+  
+</head>
+<body>
+  <div id="cesiumContainer" class="fullSize"></div>
+  <div id="loadingOverlay"><h1>Loading...</h1></div>
+  <div id="toolbar"></div>
+  
+  <script src="Functions.js"></script>
+  <script src="Special_toolbar.js"></script>
+  <script src="JavaScript.js"></script>
+</body>
+</html>
