@@ -310,5 +310,5 @@ function Move_function() {
 }//The 'Export Coordinates' button exports the coordinates to a downloadable textfile with the coordinates in Latitude/Longitude, UTM, and Modified UTMfunction Export_function() {
     //alert("Export");
     if (handler != undefined) {        handler = handler.destroy();    }    viewer.canvas.removeEventListener('click', getLatLong_Points);    viewer.canvas.removeEventListener('click', getLatLong_Polygon);        download(AllPointsOutString(UserLat, UserLon, UserLines, UserPolylines), 'Coordinates.txt', 'text/plain');
-    download(hypackOutString(UserLat, UserLon, UserLines, UserPolylines, Order), 'HYPACK.txt', 'text/plain');
+    download(hypackOutString(UserLat, UserLon, UserLines, UserPolylines, Order), 'HYPACK.L84', 'text/plain');
 }
