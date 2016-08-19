@@ -53,5 +53,13 @@ Things to improve
 	 so that it recognizes what you edited and updates the logical fields and updates
 	 the entity accordingly.
 
-	-The 'Swap Start/End' button could be more sophisticated. Right now the 'Swap Start/End' button
-	 doesn't make practical sense.
+	-The 'Swap Start/End' button could be more sophisticated. Right now the 
+	 'Swap Start/End' button doesn't make practical sense.
+
+	-The 'Move' button is pretty buggy.
+		-Moving points, in general, works.
+		-Moving a polyline doesn't work. It's weird, so I have a multidimensional array
+		 the holds all the polylines. When I try to define the polyArray as one of the 
+		 arrays in that multidimensional array it gives me an "invalid array length" error. 
+		 But then if I just hard code some polyline and define the polyArray as that, the 
+		 code works. I haven't figured out why.

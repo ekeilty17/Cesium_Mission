@@ -18,7 +18,10 @@
   <style>
     @import url(../templates/bucket.css);
   </style>
-
+  <div class="map_buttons">
+	<input type="checkbox" name="Western Gulf of Maine" id="Maine"/>Western Gulf of Maine
+	<input type="button" id="Update" class="Update" value="Update Maps" onclick="Maps_function()"/>
+  </div>
   <div class="backdrop" id="menu" style="display: inline-block;">
     <span></span>
     <div class="main_buttons">
@@ -41,8 +44,12 @@
   <div id="loadingOverlay"><h1>Loading...</h1></div>
   <div id="toolbar"></div>
   
+  <script>
+	var viewer = new Cesium.Viewer('cesiumContainer', {		baseLayerPicker : false,		selectionIndicator : true,		infoBox : true	});
+  </script>
+
   <script src="Functions.js"></script>
-  <script src="Special_toolbar.js"></script>
+  <script src="Maps.js"></script>
   <script src="JavaScript.js"></script>
 </body>
 </html>
