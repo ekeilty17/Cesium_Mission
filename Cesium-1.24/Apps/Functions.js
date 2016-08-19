@@ -26,7 +26,7 @@
 	}
 	for (var i=0; i < PolyArray.length; i++) {
 		for (var j=0; j < PolyArray[i].length; j+=2) {
-			AllLat.push(PolyArray[j+1]);
+			AllLat.push(PolyArray[i][j+1]);
 		}
 	}	
 	var AllLon = LonArray;
@@ -35,12 +35,19 @@
 		AllLon.push(LineArray[i][3]);
 	}	for (var i=0; i < PolyArray.length; i++) {
 		for (var j=0; j < PolyArray[i].length; j+=2) {
-			AllLat.push(PolyArray[j]);
+			AllLon.push(PolyArray[i][j]);
 		}
 	}    if (AllLat == null) {        return "";    }else {        var LatLongString = "LatOrigin = " + AllLat[0] + "\r\nLonOrigin = " + AllLon[0] + "\r\n\r\n";
 
-	 LatLongString += "All Points in Lat/Lon\r\n" + "Latitude, Longitude\r\n";        for (var i = 0; i < AllLat.length; i++) {            LatLongString += AllLat[i] + ", " + AllLon[i] + "\r\n";        }	        var UserUTM = deg2utm(AllLat, AllLon);        LatLongString += "\r\nAll Points in UTM\r\n" + "Easting, Northing\r\n";        for (var i = 0; i < UserUTM[0].length; i++) {            LatLongString += UserUTM[0][i] + ", " + UserUTM[1][i] + " : ";        }	        var RelativeUTM = utm_zone_relative_start_point(UserUTM);        LatLongString += "\r\n\r\nAll Points in UTM relative to the 1st Point\r\n" + "Easting, Northing\r\n";        for (var i = 0; i < RelativeUTM.length; i++) {            LatLongString += RelativeUTM[i][0] + ", " + RelativeUTM[i][1] + " : ";        }                return LatLongString;    }}function hypackBlock(Lat, Lon) {
-	
+	 LatLongString += "All Points in Lat/Lon\r\n" + "Latitude, Longitude\r\n";        for (var i = 0; i < AllLat.length; i++) {            LatLongString += AllLat[i] + ", " + AllLon[i] + "\r\n";        }	        var UserUTM = deg2utm(AllLat, AllLon);        LatLongString += "\r\nAll Points in UTM\r\n" + "Easting, Northing\r\n";        for (var i = 0; i < UserUTM[0].length; i++) {            LatLongString += UserUTM[0][i] + ", " + UserUTM[1][i] + " : ";        }	        var RelativeUTM = utm_zone_relative_start_point(UserUTM);        LatLongString += "\r\n\r\nAll Points in UTM relative to the 1st Point\r\n" + "Easting, Northing\r\n";        for (var i = 0; i < RelativeUTM.length; i++) {            LatLongString += RelativeUTM[i][0] + ", " + RelativeUTM[i][1] + " : ";        }                return LatLongString;    }}function hypackPoly(PolyArray, LineNum) {
+	var OutString = "";
+	for (var j=4; j<PolyArray.length; j+=4) {
+		OutString += "LIN 2\r\nPTS " + PolyArray[j] + " " + PolyArray[j+1] + "\r\n";
+		OutString += "PTS " + PolyArray[j+2] + " " + PolyArray[j+3] + "\r\n";
+		OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
+		++LineNum;
+	}
+	return OutString;
 }function hypackOutString(UserLat, UserLon, UserLines, UserPolylines, Order) {
 	
 	//putting the points in the order they were drawn
@@ -80,44 +87,12 @@
 				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 				++LineNum;
 			}
-			for (var j=4; j<Points_in_Order[i].length; j+=4) {
-				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][j] + " " + Points_in_Order[i][j+1] + "\r\n";
-				OutString += "PTS " + Points_in_Order[i][j+2] + " " + Points_in_Order[i][j+3] + "\r\n";
-				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
-				++LineNum;
-			}
+			OutString += hypackPoly(Points_in_Order[i], LineNum);
+			LineNum += Points_in_Order[i].length - 1;
 		}
 	}
-		
-	/*
-	for (var i=0; i<Order.length; i++) {
-		if (Order[i][0] == "P") {
-			OutString += "LIN 2\r\nPTS " + Points_in_Order[i][0] + " " + Points_in_Order[i][1] + "\r\n";
-			if (Order[i+1][0] == "P") {
-				OutString += "PTS " + Points_in_Order[i+1][0] + " " + Points_in_Order[i+1][1] + "\r\n";
-				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
-				++LineNum;
-			} else if (Order[i+1][0] == "L") {
-				if (Points_in_Order[i-1][0] != Points_in_Order[i+1][0] || Points_in_Order[i-1][1] != Points_in_Order[i+1][1]) {
-					OutString += "PTS " + Points_in_Order[i+1][2] + " " + Points_in_Order[i+1][3] + "\r\n";
-					OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
-				}
-			} else if (Order[i+1][0] == "M") {
-				OutString += "LIN 2\r\nPTS " + Points_in_Order[i+1][0] + " " + Points_in_Order[i+1][1] + "\r\n";
-				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
-				++LineNum;
-			}
-			
-		} else if (Order[i][0] == "L") {
-			
-		} else if (Order[i][0] == "M") {
-			
-		}
-	}
-	*/
 	
 	return OutString;
-	
 }//This creates a file that the user can download locally function download(strData, strFileName, strMimeType) {    var D = document,        A = arguments,        a = D.createElement("a"),        d = A[0],        n = A[1],        t = A[2] || "text/plain";    //build download link:    a.href = "data:" + strMimeType + "charset=utf-8," + escape(strData);    if (window.MSBlobBuilder) { // IE10        var bb = new MSBlobBuilder();        bb.append(strData);        return navigator.msSaveBlob(bb, strFileName);    } /* end if(window.MSBlobBuilder) */    if ('download' in a) { //FF20, CH19        a.setAttribute("download", n);        a.innerHTML = "downloading...";        D.body.appendChild(a);        setTimeout(function() {            var e = D.createEvent("MouseEvents");            e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);            a.dispatchEvent(e);            D.body.removeChild(a);        }, 66);        return true;    }; // end if('download' in a)    //do iframe dataURL download: (older W3)    var f = D.createElement("iframe");    D.body.appendChild(f);    f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64" : "") + "," + (window.btoa ? window.btoa : escape)(strData);    setTimeout(function() {        D.body.removeChild(f);    }, 333);    return true;}
 
 //Drawing functions ↓

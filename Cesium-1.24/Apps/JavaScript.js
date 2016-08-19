@@ -309,6 +309,6 @@ function Move_function() {
     if (handler != undefined) {        handler = handler.destroy();    }    if (handler2 != undefined) {        handler2 = handler2.destroy();    }    viewer.canvas.removeEventListener('click', getLatLong_Points);    viewer.canvas.removeEventListener('click', getLatLong_Polygon);        viewer.entities.removeAll();        numClicks = 0;    UserLat = [];    UserLon = [];
 }//The 'Export Coordinates' button exports the coordinates to a downloadable textfile with the coordinates in Latitude/Longitude, UTM, and Modified UTMfunction Export_function() {
     //alert("Export");
-    if (handler != undefined) {        handler = handler.destroy();    }    viewer.canvas.removeEventListener('click', getLatLong_Points);    viewer.canvas.removeEventListener('click', getLatLong_Polygon);        //download(AllPointsOutString(UserLat, UserLon, UserLines, UserPolylines), 'Coordinates.txt', 'text/plain');
+    if (handler != undefined) {        handler = handler.destroy();    }    viewer.canvas.removeEventListener('click', getLatLong_Points);    viewer.canvas.removeEventListener('click', getLatLong_Polygon);        download(AllPointsOutString(UserLat, UserLon, UserLines, UserPolylines), 'Coordinates.txt', 'text/plain');
     download(hypackOutString(UserLat, UserLon, UserLines, UserPolylines, Order), 'HYPACK.txt', 'text/plain');
 }
