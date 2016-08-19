@@ -1,0 +1,57 @@
+
+WARNING: Everything becomes skewed at large scales due to the curvature of the Earth.
+	 On a small scale where that curvature is negligible, everything should work fine.
+
+Explanations
+	polyline handedness
+		Right-handed means the first turn is to the right
+		Left-handed means the first turn is to the left
+		
+		Right handed:
+			_____________
+			_____________|
+		       |_____________
+
+		Left handed:
+			_____________
+		       |_____________
+			_____________|
+
+Things to improve
+	-Someone who is good at CSS could make those buttons look a lot prettier.
+	
+	-You could probably add more to the descriptions of the lines and polylines.
+	
+	-I have it set up so that if there are 2 points already made, it will recognize
+	 that and suggest that you draw a line between those 2 points. One of those
+	 points will be the end point, and the other will be the starting point. I
+	 haven't figured out a way to replace the end point (which is red and probably
+	 labeled 'Way Point 2') with an end point associated with the line (which is 
+	 black and labeled 'End Point 1').
+
+	-The 'Lines' and 'Lawn Mower' buttons will say "not enough or ambiguous
+	 information". I would liked the code to be able to tell the user more specific
+	 cases than that, but I figured it'd be a lot of work for not a lot of benefit.
+
+	-The whole color scheme could probably be modified
+
+	-The Latitude/Longitude coordinates that hover above the mouse don't go away if
+	 you zoom into the Earth and click another button. It might be beneficial to just
+	 remove that all together. I thought it was cool, but in practice it might not be
+	 all that useful.
+
+	-If you delete points and then create new ones, it won't reset the number. In
+	 practice I don't think this is a big deal because it will only amount to a few
+	 NaN's in the export file. Also, I don't think it's a problem that can be solved
+	 because what if you delete 'Way Point 3', but already have a 'Way Point 2' and
+	 'Way Point 4', how would the program know to make the next point 'Way Point 3'
+	 and then the point after that 'Way Point 5'.
+
+	-This would be a very big project, but if edit anything in the info box of a point 
+	 that is associated with either a line or polyline and then hit 'Fill in', it will
+	 either tell you 'All fields are full' or create a new entity. You could modify it
+	 so that it recognizes what you edited and updates the logical fields and updates
+	 the entity accordingly.
+
+	-The 'Swap Start/End' button could be more sophisticated. Right now the 'Swap Start/End' button
+	 doesn't make practical sense.
