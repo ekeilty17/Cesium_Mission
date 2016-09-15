@@ -69,21 +69,21 @@
 
 	for (var i=0; i<Order.length; i++) {
 		if (Order[i][0] == "P" && Order[i+1][0] == "P") {
-			OutString += "LIN 2\r\nPTS " + Points_in_Order[i][0] + " " + Points_in_Order[i][1] + "\r\n";
-			OutString += "PTS " + Points_in_Order[i+1][0] + " " + Points_in_Order[i+1][1] + "\r\n";
+			OutString += "LIN 2\r\nPTS " + Points_in_Order[i][1] + " " + Points_in_Order[i][0] + "\r\n";
+			OutString += "PTS " + Points_in_Order[i+1][1] + " " + Points_in_Order[i+1][0] + "\r\n";
 			OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 			++LineNum;
 		} else if (Order[i][0] == "L") {
 			if (Points_in_Order[i][2] != Points_in_Order[i-2][0] || Points_in_Order[i][3] != Points_in_Order[i-2][1]) {
-				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][0] + " " + Points_in_Order[i][1] + "\r\n";
-				OutString += "PTS " + Points_in_Order[i][2] + " " + Points_in_Order[i][3] + "\r\n";
+				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][1] + " " + Points_in_Order[i][0] + "\r\n";
+				OutString += "PTS " + Points_in_Order[i][3] + " " + Points_in_Order[i][2] + "\r\n";
 				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 				++LineNum;
 			}
 		} else if (Order[i][0] == "M") {
 			if (Points_in_Order[i][2] != Points_in_Order[i-2][0] || Points_in_Order[i][3] != Points_in_Order[i-2][1]) {
-				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][0] + " " + Points_in_Order[i][1] + "\r\n";
-				OutString += "PTS " + Points_in_Order[i][2] + " " + Points_in_Order[i][3] + "\r\n";
+				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][1] + " " + Points_in_Order[i][0] + "\r\n";
+				OutString += "PTS " + Points_in_Order[i][3] + " " + Points_in_Order[i][2] + "\r\n";
 				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 				++LineNum;
 			}
