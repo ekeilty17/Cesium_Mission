@@ -42,13 +42,15 @@
 	 LatLongString += "All Points in Lat/Lon\r\n" + "Latitude, Longitude\r\n";        for (var i = 0; i < AllLat.length; i++) {            LatLongString += AllLat[i] + ", " + AllLon[i] + "\r\n";        }	        var UserUTM = deg2utm(AllLat, AllLon);        LatLongString += "\r\nAll Points in UTM\r\n" + "Easting, Northing\r\n";        for (var i = 0; i < UserUTM[0].length; i++) {            LatLongString += UserUTM[0][i] + ", " + UserUTM[1][i] + " : ";        }	        var RelativeUTM = utm_zone_relative_start_point(UserUTM);        LatLongString += "\r\n\r\nAll Points in UTM relative to the 1st Point\r\n" + "Easting, Northing\r\n";        for (var i = 0; i < RelativeUTM.length; i++) {            LatLongString += RelativeUTM[i][0] + ", " + RelativeUTM[i][1] + " : ";        }                return LatLongString;    }}function hypackPoly(PolyArray, LineNum) {
 	var OutString = "";
 	for (var j=4; j<PolyArray.length; j+=4) {
-		OutString += "LIN 2\r\nPTS " + PolyArray[j] + " " + PolyArray[j+1] + "\r\n";
-		OutString += "PTS " + PolyArray[j+2] + " " + PolyArray[j+3] + "\r\n";
+		OutString += "LIN 2\r\nPTS " + PolyArray[j+1] + " " + PolyArray[j] + "\r\n";
+		OutString += "PTS " + PolyArray[j+3] + " " + PolyArray[j+2] + "\r\n";
 		OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 		++LineNum;
 	}
 	return [OutString, LineNum];
-}function hypackOutString(UserLat, UserLon, UserLines, UserPolylines, Order) {
+}
+
+function hypackOutString(UserLat, UserLon, UserLines, UserPolylines, Order) {
 	
 	//putting the points in the order they were drawn
 	var Points_in_Order = [];
@@ -69,19 +71,19 @@
 
 	for (var i=0; i<Order.length; i++) {
 		if (Order[i][0] == "P" && Order[i+1][0] == "P") {
-			OutString += "LIN 2\r\nPTS " + Points_in_Order[i][1] + " " + Points_in_Order[i][0] + "\r\n";
-			OutString += "PTS " + Points_in_Order[i+1][1] + " " + Points_in_Order[i+1][0] + "\r\n";
+			OutString += "LIN 2\r\nPTS " + Points_in_Order[i][0] + " " + Points_in_Order[i][1] + "\r\n";
+			OutString += "PTS " + Points_in_Order[i+1][0] + " " + Points_in_Order[i+1][1] + "\r\n";
 			OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 			++LineNum;
 		} else if (Order[i][0] == "L") {
-			if (Points_in_Order[i][2] != Points_in_Order[i-2][0] || Points_in_Order[i][3] != Points_in_Order[i-2][1]) {
+			if (Points_in_Order[i][2] != Points_in_Order[i-2][1] || Points_in_Order[i][3] != Points_in_Order[i-2][0]) {
 				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][1] + " " + Points_in_Order[i][0] + "\r\n";
 				OutString += "PTS " + Points_in_Order[i][3] + " " + Points_in_Order[i][2] + "\r\n";
 				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
 				++LineNum;
 			}
 		} else if (Order[i][0] == "M") {
-			if (Points_in_Order[i][2] != Points_in_Order[i-2][0] || Points_in_Order[i][3] != Points_in_Order[i-2][1]) {
+			if (Points_in_Order[i][2] != Points_in_Order[i-2][1] || Points_in_Order[i][3] != Points_in_Order[i-2][0]) {
 				OutString += "LIN 2\r\nPTS " + Points_in_Order[i][1] + " " + Points_in_Order[i][0] + "\r\n";
 				OutString += "PTS " + Points_in_Order[i][3] + " " + Points_in_Order[i][2] + "\r\n";
 				OutString += "LNN " + LineNum.toString() + "\r\nEOL\r\n";
