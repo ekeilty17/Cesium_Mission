@@ -12,7 +12,7 @@ or go to their [website](https://nodejs.org/en/download/)
 Run the server
 ```
 
-node ./Cesium-1.24/server.js
+$ node ./Cesium-1.24/server.js
 
 ```
 
